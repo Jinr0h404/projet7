@@ -24,7 +24,8 @@ class Parser():
 		return self.keyword
 
 	def special_characters(self):
-		self.question = re.sub(r"[^a-zA-Zéèùû-]"," ",self.question) #expression régulière pour enlever les caractères spéciaux
+		"""regular expression to remove special characters"""
+		self.question = re.sub(r"[^a-zA-Zéèùû-]"," ",self.question)
 		return self.question
 
 	def convert_lower(self):
@@ -36,6 +37,8 @@ class Parser():
 		return self.question
 
 	def list_to_keyword(self):
+		""" browse the list and compare it to the stopword to keek only the
+		words that are not in"""
 		for word in self.question:
 			if word not in stopwords_list['stopwords']:
 				self.keyword.append(word)
