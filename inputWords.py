@@ -51,7 +51,7 @@ class Map():
         self.style="border:0"
         self.loading="lazy"
         self.allowfullscreen = "allowfullscreen"
-        self.src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog&q="
+        self.src="'https://www.google.com/maps/embed/v1/place?key=GOOGLEAPIKEY="
 
     def generate_map(self, keyword):
         """method to generate complete url with keyword from user input for
@@ -65,10 +65,11 @@ class Map():
 
 
 #test class and method parse
-question_input = 'Salut Grandpy, je veux aller au Louvre'
+question_input = 'Salut Grandpy, je veux aller au Louvre!'
 sut = Parser(question_input)
-print(sut.parse())
+sut.parse()
 
 map = Map()
 
 map.generate_map(sut.keyword)
+print(map.src)
