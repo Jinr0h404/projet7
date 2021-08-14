@@ -5,7 +5,9 @@
 #nltk.download('stopwords')
 import re
 import json
-
+import os
+import googlemaps
+gmaps = googlemaps.Client(key="AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog")
 
 with open('stopwordsFr.json', encoding="utf-8") as json_stopwords:
     stopwords_list = json.load(json_stopwords)
@@ -51,7 +53,7 @@ class Map():
         self.style="border:0"
         self.loading="lazy"
         self.allowfullscreen = "allowfullscreen"
-        self.src="'https://www.google.com/maps/embed/v1/place?key=GOOGLEAPIKEY="
+        self.src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog&q="
 
     def generate_map(self, keyword):
         """method to generate complete url with keyword from user input for
@@ -65,7 +67,7 @@ class Map():
 
 
 #test class and method parse
-question_input = 'Salut Grandpy, je veux aller au Louvre!'
+question_input = 'Salut Grandpy, je veux aller cherbourg!'
 sut = Parser(question_input)
 sut.parse()
 
@@ -73,3 +75,12 @@ map = Map()
 
 map.generate_map(sut.keyword)
 print(map.src)
+for word in sut.keyword:
+        place = word
+        geocode_result = gmaps.geocode(word)
+        if len(geocode_result) > 0 :
+            longitude = geocode_result[0]["geometry"]["location"]["lng"]
+            latitude = geocode_result[0]["geometry"]["location"]["lat"]
+            adresse = geocode_result[0]["formatted_address"]
+            print("longitude: ",longitude, "latitude: ",latitude, "adresse: ",adresse)
+        print(geocode_result)
