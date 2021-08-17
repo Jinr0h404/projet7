@@ -46,7 +46,7 @@
                 return sendMessage(getMessageText());
             }
         });
-        sendMessage('Hello Philip! :)');
+        sendMessage("salut mon ptit! Que puis-je faire pour toi? :)");
         setTimeout(function () {
             return sendMessage('Hi Sandy! How are you?');
         }, 1000);
