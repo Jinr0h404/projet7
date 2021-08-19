@@ -74,6 +74,8 @@ class Google_position():
         self.position_keyword = {}
 
     def locate_position(self, input_search):
+        """method to import the latitude and longitude coordinates from
+        the gmaps api with the keyword retrieved from the parsed list""" 
         for word in input_search.keyword:
             geocode_result = gmaps.geocode(word, region="fr", language="fr")
             if len(geocode_result) > 0 :
@@ -91,8 +93,12 @@ class Wiki():
         self.radius = 1000
 
     def wiki_article(self, latitude, longitude):
-        article = wikipedia.geosearch(latitude, longitude, title= self.title, results= self.results, radius= self.radius)
-        print(article)
+        """method to import information about a place with the latitude and
+        longitude coordinates from the gmaps api"""
+        wikipedia.set_lang("fr")
+        article = wikipedia.geosearch(latitude, longitude, title= self.title, results= self.results, radius= self.radius)[0]
+        summary = wikipedia.summary(article, sentences=0, chars=0, auto_suggest=True, redirect=True)
+        print(article, summary)
 
 
 #test class and method parse
@@ -110,14 +116,14 @@ position.locate_position(input_search)
 print(position.position_keyword)
 
 wikipedia.set_lang("fr")
-wiki_result = wikipedia.geosearch(48.8737917, 2.2950275, title=None, results=1, radius=1000)
-print(wiki_result)
-print(wikipedia.summary(wiki_result, sentences=0, chars=0, auto_suggest=True, redirect=True))
-wiki_resultb = wikipedia.geosearch(48.85837009999999, 2.2944813, title=None, results=1, radius=1000)[0]
-print(wiki_resultb)
+#wiki_result = wikipedia.geosearch(48.8737917, 2.2950275, title=None, results=1, radius=1000)
+#print(wiki_result)
+#print(wikipedia.summary(wiki_result, sentences=0, chars=0, auto_suggest=True, redirect=True))
+#wiki_resultb = wikipedia.geosearch(48.85837009999999, 2.2944813, title=None, results=1, radius=1000)[0]
+#print(wiki_resultb)
 
 
 article_wiki = Wiki()
 latitudeB = 48.8737917
 longitudeB = 2.2950275
-article_wiki.wiki_article(latitudeB, longitudeB)
+article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
