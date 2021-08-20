@@ -67,23 +67,23 @@ class Parser():
 #        return self.src
 
 class Google_position():
-    def __init__(self):
+    def __init__(self, input_search):
         self.latitude = 0
         self.longitude = 0
         self.adresse = ''
+        self.input_search = input_search
         self.position_keyword = {}
 
-    def locate_position(self, input_search):
+    def locate_position(self):
         """method to import the latitude and longitude coordinates from
         the gmaps api with the keyword retrieved from the parsed list""" 
-        for word in input_search.keyword:
+        for word in self.input_search.keyword:
             geocode_result = gmaps.geocode(word, region="fr", language="fr")
             if len(geocode_result) > 0 :
                 self.position_keyword = {"longitude" : geocode_result[0]["geometry"]["location"]["lng"],
                 "latitude" : geocode_result[0]["geometry"]["location"]["lat"],
                 "adresse" : geocode_result[0]["formatted_address"]}
                 return self.position_keyword
-                #print(word," se trouve à une longitude: ",longitude, "et une latitude: ",latitude, "son adresse est: ",adresse)
 
 
 class Wiki():
@@ -101,29 +101,24 @@ class Wiki():
         print(article, summary)
 
 
-#test class and method parse
-question_input = 'Salut Grandpy, parle moi de l"arc-de-triomphe'
-input_search = Parser(question_input)
-input_search.parse()
 
-#map = Map()
-#map.generate_map(sut.keyword)
-#print(map.src)
+def main():
+    #test class and method parse
+    question_input = 'Salut Grandpy, parle moi de l"arc-de-triomphe'
+    input_search = Parser(question_input)
+    input_search.parse()
 
+    #google part
+    position = Google_position(input_search)
+    position.locate_position()
+    print(position.position_keyword)
 
-position = Google_position()
-position.locate_position(input_search)
-print(position.position_keyword)
-
-wikipedia.set_lang("fr")
-#wiki_result = wikipedia.geosearch(48.8737917, 2.2950275, title=None, results=1, radius=1000)
-#print(wiki_result)
-#print(wikipedia.summary(wiki_result, sentences=0, chars=0, auto_suggest=True, redirect=True))
-#wiki_resultb = wikipedia.geosearch(48.85837009999999, 2.2944813, title=None, results=1, radius=1000)[0]
-#print(wiki_resultb)
+    #wiki part
+    wikipedia.set_lang("fr")
+    article_wiki = Wiki()
+    article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
 
 
-article_wiki = Wiki()
-latitudeB = 48.8737917
-longitudeB = 2.2950275
-article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
+if __name__ == "__main__":
+    """execute main function of thie file if he is run like main program"""
+    main()
