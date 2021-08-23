@@ -24,7 +24,7 @@ class Parser():
         self.convert_lower()
         self.convert_list()
         self.list_to_keyword()
-        return self.keyword
+        #return self.keyword
 
     def special_characters(self):
         """regular expression to remove special characters"""
@@ -120,5 +120,5 @@ def main():
 
 
 if __name__ == "__main__":
-    """execute main function of thie file if he is run like main program"""
+    """execute main function of the file if he is run like main program"""
     main()
