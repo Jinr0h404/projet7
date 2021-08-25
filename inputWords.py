@@ -91,20 +91,19 @@ class Wiki():
         self.title = None
         self.results = 1
         self.radius = 1000
-
+        self.summary = ""
     def wiki_article(self, latitude, longitude):
         """method to import information about a place with the latitude and
         longitude coordinates from the gmaps api"""
         wikipedia.set_lang("fr")
         article = wikipedia.geosearch(latitude, longitude, title= self.title, results= self.results, radius= self.radius)[0]
-        summary = wikipedia.summary(article, sentences=0, chars=0, auto_suggest=True, redirect=True)
-        print(article, summary)
-
+        self.summary = wikipedia.summary(article, sentences=0, chars=0, auto_suggest=True, redirect=True)
+        return self.summary
 
 
 def main():
     #test class and method parse
-    question_input = 'Salut Grandpy, parle moi de l"arc-de-triomphe'
+    question_input = 'Salut Grandpy, parle moi de l"elysée'
     input_search = Parser(question_input)
     input_search.parse()
 
@@ -117,6 +116,7 @@ def main():
     wikipedia.set_lang("fr")
     article_wiki = Wiki()
     article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
+    print(article_wiki.summary)
 
 
 if __name__ == "__main__":

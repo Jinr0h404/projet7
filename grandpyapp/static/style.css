@@ -71,6 +71,9 @@ body {
   opacity: 0;
 }
 .messages .message.left .avatar {
+  background-image: url(tortue.png);
+  background-repeat: no-repeat;
+  background-position: center center;
   background-color: #f5886e;
   float: left;
 }
@@ -86,6 +89,9 @@ body {
   color: #c48843;
 }
 .messages .message.right .avatar {
+  background-image: url(krilin.png);
+  background-repeat: no-repeat;
+  background-position: center center;
   background-color: #fdbf68;
   float: right;
 }
