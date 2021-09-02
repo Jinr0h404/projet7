@@ -55,8 +55,16 @@
         };
         $('.send_message').click(function (e) {
             $.ajax({
-            url: "/",
+            data: {
+                question_input: $("#input_request").val()
+            },
+            type: 'POST',
+            url: "/process",
             success: display_news
+        })
+        .done(function(data) {
+            console.log(data.question_input)
+            sendMessageLeft(data.question_input);
         });
 
         console.log("Au revoir");
@@ -74,12 +82,13 @@
                 question_input: $("#input_request").val()
             },
             type: 'POST',
-            url: "/process",
-            success: display_news
+            url: "/process"
         })
         .done(function(data) {
-            console.log(data.question_input)
-        });
+            sendMessageLeft(data.question_input);
+        })
+
+        .fail(sendMessageLeft("je n'ai pas compris. Peut être que si tu m'apportes une petite culotte cela m'aidera à me souvenir"));
 
 
         console.log("Au revoir");
@@ -94,6 +103,8 @@
     });
 }.call(this));
 
+
+//fonction exemple pour test et comprendre le fonctionnement d'ajax
 $(document).ready(function(){
     console.log("bonjour");
         

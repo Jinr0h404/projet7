@@ -101,9 +101,9 @@ class Wiki():
         return self.summary
 
 
-def main():
+def main(user_input):
     #test class and method parse
-    question_input = 'Salut Grandpy, parle moi de l"elysée'
+    question_input = user_input
     input_search = Parser(question_input)
     input_search.parse()
 
@@ -117,6 +117,7 @@ def main():
     article_wiki = Wiki()
     article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
     print(article_wiki.summary)
+    return article_wiki.summary
 
 
 if __name__ == "__main__":
