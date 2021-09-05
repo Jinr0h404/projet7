@@ -60,7 +60,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 530px;
+  height: 510px;
   overflow: scroll;
 }
 .messages .message {
@@ -196,6 +196,16 @@ body {
   line-height: 48px;
 }
 
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+.footer .student_name {
+  color: #bcbdc0;
+}
+.footer .link_presentation {
+  color: #bcbdc0;
+}
 .message_template {
   display: none;
 }

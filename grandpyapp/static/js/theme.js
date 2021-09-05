@@ -60,7 +60,6 @@
             },
             type: 'POST',
             url: "/process",
-            success: display_news
         })
         .done(function(data) {
             console.log(data.question_input)
@@ -69,9 +68,7 @@
 
         console.log("Au revoir");
         
-        function display_news(result){
-            console.log("Nous allons afficher les articles de presse");
-        }
+
             return sendMessageRight(getMessageText());
 
         });
@@ -88,15 +85,9 @@
             sendMessageLeft(data.question_input);
         })
 
-        .fail(sendMessageLeft("je n'ai pas compris. Peut être que si tu m'apportes une petite culotte cela m'aidera à me souvenir"));
+        //.fail(sendMessageLeft("je n'ai pas compris. Peut être que si tu m'apportes une petite culotte cela m'aidera à me souvenir"));
 
-
-        console.log("Au revoir");
-        
-        function display_news(result){
-            console.log("Nous allons afficher les articles de presse");
-        }
-                return sendMessageRight(getMessageText());
+            return sendMessageRight(getMessageText());
             }
         });
         sendMessageLeft("salut mon ptit! Que puis-je faire pour toi? :)");
