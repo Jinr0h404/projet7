@@ -117,7 +117,7 @@ def main(user_input):
     article_wiki = Wiki()
     article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
     print(article_wiki.summary)
-    return article_wiki.summary
+    return {"wiki":article_wiki.summary,"google_map":position.position_keyword}
 
 
 if __name__ == "__main__":
