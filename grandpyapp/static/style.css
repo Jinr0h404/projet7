@@ -6,6 +6,12 @@ body {
   background-color: #edeff2;
   font-family: "Calibri", "Roboto", sans-serif;
 }
+.logo{
+  display: flex;
+  justify-content: center;
+  color: #bcbdc0;
+
+}
 
 .chat_window {
   position: absolute;
@@ -60,7 +66,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  height: 510px;
+  height: 530px;
   overflow: scroll;
 }
 .messages .message {
@@ -196,9 +202,16 @@ body {
   line-height: 48px;
 }
 
-.footer {
+footer{
+  position: absolute;
+  bottom: 3%;
+  width: 100%;
+}
+
+.footer{
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+
 }
 .footer .student_name {
   color: #bcbdc0;
@@ -208,4 +221,23 @@ body {
 }
 .message_template {
   display: none;
+}
+
+.message_template_map {
+  display: none;
+}
+
+#map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 60%;
+  /* The width is the width of the web page */
+  
+}
+.map {
+  height: 400px;
+  /* The height is 400 pixels */
+  width: 60%;
+  /* The width is the width of the web page */
+  
 }

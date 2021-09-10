@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import inputWords
 import json
 import random
+# coding: utf-8
 
 def create_app(config):
     app = Flask(__name__)
@@ -12,7 +13,6 @@ def create_app(config):
         return render_template('index.html')
 
     @app.route('/process', methods=['POST', 'GET'])
-
     def process_wiki():
         question_input = request.form["question_input"]
         if question_input:
@@ -20,8 +20,16 @@ def create_app(config):
             with open('anecdote.json') as random_anecdote:
                 data = json.load(random_anecdote)
                 anecdote = random.choice(data["anecdote_wiki"])
-            return jsonify({'question_input' : anecdote + test_input["wiki"]})
-            #return jsonify({'question_input' : anecdote + str(test_input["google_map"]["longitude"])})
+                anecdote_map = random.choice(data["anecdote_google"])
+                address = test_input["google_map"]["adresse"]
+            lon=test_input["google_map"]["longitude"]
+            lat=test_input["google_map"]["latitude"]
+            return jsonify({'question_input' : anecdote_map + "l'adresse est: " + str(address) + ". sa latitude et sa longitude sont: "+ str(lat) +"et "+ str(lon), 'wiki_input' : anecdote + test_input["wiki"], 'longitude_input':lon,'latitude_input':lat})
+            #return jsonify({'google_map_api' : anecdote_map + str(test_input["google_map"]["longitude"])})
+    #def locate_map():
+        #lon=test_input["google_map"]["longitude"]
+        #lat=test_input["google_map"]["latitude"]
+        #return render_template("index.html", lon=lon, lat=lat)
 
     return app
 

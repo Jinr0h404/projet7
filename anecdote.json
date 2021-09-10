@@ -4,6 +4,11 @@
 		"Oh! Vraiment?! Et bien si tu veux tout savoir: ",
 		"Les jeunes d'aujourd'hui ne savent même plus ça? bon... "
 	],
+	"anecdote_google":["Si je ne m'abuse, ce doit être du côté de: ",
+		"hoho, on ne me demande pas ça tous les jours, c'est à cet endroit: ",
+		"Tu es sûr? Voici l'adresse: ",
+		"heyyyyy, trouvé, regarde: "
+	],
 	"unknown":["heum heum, comment dis-tu? Es-tu sûr de bien le prononcer?",
 		"Cet endroit m'est inconnu, ce ne doit pas être sur terre.",
 		"Je suis gêné, je prends un médicament pour le rhume et cela altère ma mémoire. Je suis pourtant sûr d'y être déjà allé",

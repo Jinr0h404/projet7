@@ -12,6 +12,12 @@
       <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
+    <header>
+        <div class="logo">
+            <p><img src="../static/grandpy.png" alt="image de grandpy" /></p>
+            <h3>GrandPy a beaucoup voyagé, il a plein de choses à te raconter</h3>
+        </div>
+    </header>
 
     <div class="chat_window">
         <div class="top_menu">
@@ -20,9 +26,15 @@
                 <div class="button minimize"></div>
                 <div class="button maximize"></div>
             </div>
-            <div class="title">GrandPy a beaucoup voyagé, il a plein de choses à te raconter</div>
+            <div class="title">demande moi ce que tu veux</div>
         </div>
-        <ul class="messages"></ul>
+        <ul class="messages">
+            <!--<li class="message left appeared">
+                <div class="avatar"></div>
+                <div class="text_wrapper">
+                    <div id="map"></div>
+                </div></li>-->
+        </ul>
         <div class="bottom_wrapper clearfix">
             <div class="message_input_wrapper">
                 <input class="message_input" id="input_request" placeholder="Type your message here..." />
@@ -30,14 +42,6 @@
             <div class="send_message">
                 <div class="icon"></div>
                 <div class="text">Send</div>
-            </div>
-            <div class="footer">
-                <div class="student_name">
-                    Ewen Jeannenot
-                </div>
-                <div class="link_presentation">
-                    <a href="https://github.com/Jinr0h404/projet7" class="link_presentation">Github du projet</a>
-                </div>
             </div>
         </div>
     </div>
@@ -49,9 +53,32 @@
             </div>
         </li>
     </div>
+    <div class="message_template_map">
+        <li class="message">
+            <div class="avatar"></div>
+            <div class="text_wrapper">
+                <div class="map" id="map"></div>
+            </div>
+        </li>
+    </div>
+    <footer>
+        <div class="footer">
+            <p class="student_name">
+                Ewen Jeannenot
+            </p>
+            <p  class="link_presentation">
+                <a href="https://github.com/Jinr0h404/projet7" class="link_presentation" target="_blank">Github du projet</a>
+            </p>
+        </div>
+        
+    </footer>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.js"></script>
     <!--<script type="text/javascript" src="../static/js/theme.js"></script>-->
     <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDCexqpkZbnWEsdA6KAF5lKb_uKyZLkS44&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
   </body>
 </html>
