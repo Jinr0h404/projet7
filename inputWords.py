@@ -15,6 +15,7 @@ with open('stopwordsFr.json', encoding="utf-8") as json_stopwords:
 
 
 class Parser():
+    """Parser class contains all the methods to parse a sentence"""
     def __init__(self, question):
         self.question = question
         self.keyword = []
@@ -24,20 +25,18 @@ class Parser():
         self.convert_lower()
         self.convert_list()
         self.list_to_keyword()
-        #return self.keyword
 
     def special_characters(self):
         """regular expression to remove special characters"""
         self.question = re.sub(r"[^a-zA-Zéèùû-]"," ",self.question)
-        #return self.question
 
     def convert_lower(self):
+        """method to convert all string in lower case"""
         self.question = self.question.lower()
-        #return self.question
 
     def convert_list(self):
+        """method to convert a sentence in a list of words"""
         self.question = self.question.split()
-        #return self.question
 
     def list_to_keyword(self):
         """ browse the list and compare it to the stopword to keek only the
@@ -45,28 +44,11 @@ class Parser():
         for word in self.question:
             if word not in stopwords_list['stopwords']:
                 self.keyword.append(word)
-        #return self.keyword
 
-#class Map():
-#    def __init__(self):
-#        self.width="600"
-#        self.height="450"
-#        self.style="border:0"
-#        self.loading="lazy"
-#        self.allowfullscreen = "allowfullscreen"
-#        self.src="'https://www.google.com/maps/embed/v1/place?key=AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog&q="
-#
-#    def generate_map(self, keyword):
-#        """method to generate complete url with keyword from user input for
-#        resquet google API"""
-#        for word in keyword:
-#            """concat keyword and + with the request URL for google API"""
-#            self.src= self.src + word + "+"
-#            """remove last + adding by loop and add ' for ending URL"""
-#        self.src = self.src[:-1] + "'"
-#        return self.src
 
 class Google_position():
+    """Google_position class takes words like args and return the latitude and
+    the longitude from google maps api"""
     def __init__(self, input_search):
         self.latitude = 0
         self.longitude = 0
@@ -80,13 +62,16 @@ class Google_position():
         for word in self.input_search.keyword:
             geocode_result = gmaps.geocode(word, region="fr", language="fr")
             if len(geocode_result) > 0 :
-                self.position_keyword = {"longitude" : geocode_result[0]["geometry"]["location"]["lng"],
+                self.position_keyword = {
+                "longitude" :geocode_result[0]["geometry"]["location"]["lng"],
                 "latitude" : geocode_result[0]["geometry"]["location"]["lat"],
                 "adresse" : geocode_result[0]["formatted_address"]}
                 return self.position_keyword
 
 
 class Wiki():
+    """Wiki class takes as attribute the wikipedia's api parameters for keep
+    the first result"""
     def __init__(self):
         self.title = None
         self.results = 1
@@ -96,8 +81,10 @@ class Wiki():
         """method to import information about a place with the latitude and
         longitude coordinates from the gmaps api"""
         wikipedia.set_lang("fr")
-        article = wikipedia.geosearch(latitude, longitude, title= self.title, results= self.results, radius= self.radius)[0]
-        self.summary = wikipedia.summary(article, sentences=0, chars=0, auto_suggest=True, redirect=True)
+        article = wikipedia.geosearch(latitude, longitude, title= self.title,
+            results= self.results, radius= self.radius)[0]
+        self.summary = wikipedia.summary(article, sentences=0, chars=0,
+            auto_suggest=True, redirect=True)
         return self.summary
 
 
@@ -110,14 +97,14 @@ def main(user_input):
     #google part
     position = Google_position(input_search)
     position.locate_position()
-    print(position.position_keyword)
 
     #wiki part
     wikipedia.set_lang("fr")
     article_wiki = Wiki()
-    article_wiki.wiki_article(position.position_keyword['latitude'], position.position_keyword['longitude'] )
-    print(article_wiki.summary)
-    return {"wiki":article_wiki.summary,"google_map":position.position_keyword}
+    article_wiki.wiki_article(position.position_keyword['latitude'],
+        position.position_keyword['longitude'])
+    return {"wiki":article_wiki.summary,
+    "google_map":position.position_keyword}
 
 
 if __name__ == "__main__":

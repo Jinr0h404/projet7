@@ -99,12 +99,11 @@
             type: 'POST',
             url: "/process",
         })
-        .done(function(data) {
 
-            console.log(data.wiki_input)
+        .done(function(data) {
             sendMessageLeft(data.question_input)
             sendMessageMap()
-            
+            //selector for first id in html page and attibute a new id map with increment by number of map class element.
             $("#map:first").attr("id","map"+($(".map").length))
             sendMessageLeft(data.wiki_input)
             let map_creation= 1;
@@ -123,20 +122,17 @@
                     position: target_search,
                     map: map,
                 });
-                },1000);
-                //Change id of first balise map in html
-                // setTimeout($("#map:first").attr("id","mapold"), 10000) ;
+                },500);
             }
-            i=i++;
             }
         );
-
-        console.log("Au revoir");
-        
 
             return sendMessageRight(getMessageText());
 
         });
+
+
+
         $('.message_input').keyup(function (e) {
             if (e.which === 13) {
                 $.ajax({
@@ -146,9 +142,33 @@
             type: 'POST',
             url: "/process"
         })
+
         .done(function(data) {
-            sendMessageLeft(data.question_input);
-        })
+            sendMessageLeft(data.question_input)
+            sendMessageMap()
+            //selector for first id in html page and attibute a new id map with increment by number of map class element.
+            $("#map:first").attr("id","map"+($(".map").length))
+            sendMessageLeft(data.wiki_input)
+            let map_creation= 1;
+            if(map_creation){
+                // Initialize and add the map
+                setTimeout(function initMap() {
+                // The location of target_search
+                let target_search = { lat: data.latitude_input, lng: data.longitude_input };
+                // The map, centered at target_search
+                let map = new google.maps.Map(document.getElementById("map"+($(".map").length)), {
+                    zoom: 8,
+                    center: target_search,
+                });
+                // The marker, positioned at target_search
+                let marker = new google.maps.Marker({
+                    position: target_search,
+                    map: map,
+                });
+                },500);
+            }
+            }
+        );
 
         //.fail(sendMessageLeft("je n'ai pas compris. Peut être que si tu m'apportes une petite culotte cela m'aidera à me souvenir"));
 
@@ -158,37 +178,3 @@
         sendMessageLeft("salut mon ptit! Que puis-je faire pour toi? :)");
     });
 }.call(this));
-
-
-//fonction exemple pour test et comprendre le fonctionnement d'ajax
-$(document).ready(function(){
-    console.log("bonjour");
-        
-        $.ajax({
-            url: "/",
-            success: display_news
-        });
-
-        console.log("Au revoir");
-        
-        function display_news(result){
-            console.log("Nous allons afficher les articles de presse");
-        }
-    });
-
-
-//function initMap() {
-  // The location of target_search
-//  let target_search = { lat: -25.344, lng: 131.036 };
-  // The map, centered at target_search
-//  let map = new google.maps.Map(document.getElementById("map"), {
-//    zoom: 6,
-//    center: target_search,
-//  });
-  // The marker, positioned at target_search
-//  let marker = new google.maps.Marker({
-//    position: target_search,
-//    map: map,
-//}
-            //let python_data_lat = {{ lat | tojson }};
-            //let python_data_lon = {{ lon | tojson }};
