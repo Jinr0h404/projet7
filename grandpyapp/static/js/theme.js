@@ -101,6 +101,7 @@
         })
 
         .done(function(data) {
+            if (data.status=='ok'){
             sendMessageLeft(data.question_input)
             sendMessageMap()
             //selector for first id in html page and attibute a new id map with increment by number of map class element.
@@ -124,7 +125,10 @@
                 });
                 },500);
             }
-            }
+            ;}
+            else{
+                sendMessageLeft(data.question_input);
+            }}
         );
 
             return sendMessageRight(getMessageText());
@@ -144,6 +148,7 @@
         })
 
         .done(function(data) {
+            if (data.status=='ok'){
             sendMessageLeft(data.question_input)
             sendMessageMap()
             //selector for first id in html page and attibute a new id map with increment by number of map class element.
@@ -167,10 +172,12 @@
                 });
                 },500);
             }
-            }
+            ;}
+            else{
+                sendMessageLeft(data.question_input);
+            }}
         );
 
-        //.fail(sendMessageLeft("je n'ai pas compris. Peut être que si tu m'apportes une petite culotte cela m'aidera à me souvenir"));
 
             return sendMessageRight(getMessageText());
             }

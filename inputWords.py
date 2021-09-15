@@ -55,18 +55,25 @@ class Google_position():
         self.adresse = ''
         self.input_search = input_search
         self.position_keyword = {}
+        self.status = ""
 
     def locate_position(self):
         """method to import the latitude and longitude coordinates from
         the gmaps api with the keyword retrieved from the parsed list""" 
-        for word in self.input_search.keyword:
-            geocode_result = gmaps.geocode(word, region="fr", language="fr")
-            if len(geocode_result) > 0 :
-                self.position_keyword = {
-                "longitude" :geocode_result[0]["geometry"]["location"]["lng"],
-                "latitude" : geocode_result[0]["geometry"]["location"]["lat"],
-                "adresse" : geocode_result[0]["formatted_address"]}
-                return self.position_keyword
+        #for word in self.input_search.keyword:
+            #geocode_result = gmaps.geocode(word, region="fr", language="fr")
+        str_keyword = ' '.join(self.input_search.keyword)
+        geocode_result = gmaps.geocode(str_keyword, region="fr", language="fr")
+        print(geocode_result)
+        if len(geocode_result) > 0 :
+            self.status = "ok"
+            self.position_keyword = {
+            "longitude" :geocode_result[0]["geometry"]["location"]["lng"],
+            "latitude" : geocode_result[0]["geometry"]["location"]["lat"],
+            "adresse" : geocode_result[0]["formatted_address"]}
+            return self.position_keyword
+        else:
+            self.status = "not_ok"
 
 
 class Wiki():
@@ -77,19 +84,26 @@ class Wiki():
         self.results = 1
         self.radius = 1000
         self.summary = ""
+        self.wiki_status = ""
     def wiki_article(self, latitude, longitude):
         """method to import information about a place with the latitude and
         longitude coordinates from the gmaps api"""
         wikipedia.set_lang("fr")
         article = wikipedia.geosearch(latitude, longitude, title= self.title,
-            results= self.results, radius= self.radius)[0]
-        self.summary = wikipedia.summary(article, sentences=0, chars=0,
-            auto_suggest=True, redirect=True)
-        return self.summary
+            results= self.results, radius= self.radius)
+        if len(article) > 0:
+            self.wiki_status = "ok"
+            self.summary = wikipedia.summary(article, sentences=0, chars=0,
+                auto_suggest=True, redirect=True)
+            return self.summary
+        else:
+            self.wiki_status = "not_ok"
+
 
 
 def main(user_input):
-    #test class and method parse
+    """main methode create an instance of the wiki class and the google 
+    class to return map and wikipedia info to the view"""
     question_input = user_input
     input_search = Parser(question_input)
     input_search.parse()
@@ -97,15 +111,20 @@ def main(user_input):
     #google part
     position = Google_position(input_search)
     position.locate_position()
-
-    #wiki part
-    wikipedia.set_lang("fr")
-    article_wiki = Wiki()
-    article_wiki.wiki_article(position.position_keyword['latitude'],
+    if position.status == "ok":
+        #wiki part
+        wikipedia.set_lang("fr")
+        article_wiki = Wiki()
+        article_wiki.wiki_article(position.position_keyword['latitude'],
         position.position_keyword['longitude'])
-    return {"wiki":article_wiki.summary,
-    "google_map":position.position_keyword}
-
+        if article_wiki.wiki_status == "ok":
+            return {"status":position.status,
+            "wiki":article_wiki.summary,
+            "google_map":position.position_keyword}
+        else:
+            return {"status":"not_ok"}
+    else:
+        return {"status":position.status}
 
 if __name__ == "__main__":
     """execute main function of the file if he is run like main program"""
