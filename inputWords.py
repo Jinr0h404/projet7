@@ -1,11 +1,8 @@
 #! /usr/bin/env python3
 # coding: utf-8
 
-#from nltk.corpus import stopwords
-#nltk.download('stopwords')
 import re
 import json
-import os
 import googlemaps
 import wikipedia
 gmaps = googlemaps.Client(key="AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog")
@@ -28,7 +25,7 @@ class Parser():
 
     def special_characters(self):
         """regular expression to remove special characters"""
-        self.question = re.sub(r"[^a-zA-Zéèùû-]"," ",self.question)
+        self.question = re.sub(r"[^a-zA-Zéèùû-]", " ", self.question)
 
     def convert_lower(self):
         """method to convert all string in lower case"""
@@ -59,18 +56,20 @@ class Google_position():
 
     def locate_position(self):
         """method to import the latitude and longitude coordinates from
-        the gmaps api with the keyword retrieved from the parsed list""" 
-        #for word in self.input_search.keyword:
-            #geocode_result = gmaps.geocode(word, region="fr", language="fr")
+        the gmaps api with the keyword retrieved from the parsed list"""
+        # for word in self.input_search.keyword:
+        # geocode_result = gmaps.geocode(word, region="fr", language="fr")
         str_keyword = ' '.join(self.input_search.keyword)
         geocode_result = gmaps.geocode(str_keyword, region="fr", language="fr")
         print(geocode_result)
-        if len(geocode_result) > 0 :
+        if len(geocode_result) > 0:
             self.status = "ok"
             self.position_keyword = {
-            "longitude" :geocode_result[0]["geometry"]["location"]["lng"],
-            "latitude" : geocode_result[0]["geometry"]["location"]["lat"],
-            "adresse" : geocode_result[0]["formatted_address"]}
+                "longitude":
+                    geocode_result[0]["geometry"]["location"]["lng"],
+                "latitude":
+                    geocode_result[0]["geometry"]["location"]["lat"],
+                "adresse": geocode_result[0]["formatted_address"]}
             return self.position_keyword
         else:
             self.status = "not_ok"
@@ -85,46 +84,51 @@ class Wiki():
         self.radius = 1000
         self.summary = ""
         self.wiki_status = ""
+
     def wiki_article(self, latitude, longitude):
         """method to import information about a place with the latitude and
         longitude coordinates from the gmaps api"""
         wikipedia.set_lang("fr")
-        article = wikipedia.geosearch(latitude, longitude, title= self.title,
-            results= self.results, radius= self.radius)
+        article = wikipedia.geosearch(
+            latitude,
+            longitude,
+            title=self.title, results=self.results, radius=self.radius)
         if len(article) > 0:
             self.wiki_status = "ok"
-            self.summary = wikipedia.summary(article, sentences=0, chars=0,
-                auto_suggest=True, redirect=True)
+            self.summary = wikipedia.summary(
+                    article,
+                    sentences=0, chars=0, auto_suggest=True, redirect=True)
             return self.summary
         else:
             self.wiki_status = "not_ok"
 
 
-
 def main(user_input):
-    """main methode create an instance of the wiki class and the google 
+    """main methode create an instance of the wiki class and the google
     class to return map and wikipedia info to the view"""
     question_input = user_input
     input_search = Parser(question_input)
     input_search.parse()
 
-    #google part
+    # google part
     position = Google_position(input_search)
     position.locate_position()
     if position.status == "ok":
-        #wiki part
+        # wiki part
         wikipedia.set_lang("fr")
         article_wiki = Wiki()
-        article_wiki.wiki_article(position.position_keyword['latitude'],
-        position.position_keyword['longitude'])
+        article_wiki.wiki_article(
+            position.position_keyword['latitude'],
+            position.position_keyword['longitude'])
         if article_wiki.wiki_status == "ok":
-            return {"status":position.status,
-            "wiki":article_wiki.summary,
-            "google_map":position.position_keyword}
+            return {"status": position.status,
+                    "wiki": article_wiki.summary,
+                    "google_map": position.position_keyword}
         else:
-            return {"status":"not_ok"}
+            return {"status": "not_ok"}
     else:
-        return {"status":position.status}
+        return {"status": position.status}
+
 
 if __name__ == "__main__":
     """execute main function of the file if he is run like main program"""

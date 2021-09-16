@@ -1,6 +1,7 @@
 import pytest
 from grandpyapp.views import create_app
 
+
 @pytest.fixture
 def client():
     app = create_app({"TESTING": True})
