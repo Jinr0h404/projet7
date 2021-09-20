@@ -5,7 +5,11 @@ import re
 import json
 import googlemaps
 import wikipedia
-gmaps = googlemaps.Client(key="AIzaSyDPxv70CaJvHkp4H7QQRYU5o1m7h3R6Cog")
+import os
+from dotenv import load_dotenv
+load_dotenv()
+GOOGLEAPIKEY = os.environ.get('GOOGLEAPIKEY')
+gmaps = googlemaps.Client(key=GOOGLEAPIKEY)
 
 with open('stopwordsFr.json', encoding="utf-8") as json_stopwords:
     stopwords_list = json.load(json_stopwords)
