@@ -11,7 +11,7 @@ def create_app(config):
 
     @app.route('/')
     def index():
-        return render_template('index.html')
+        return render_template('index.html', GOOGLEAPIKEY=inputWords.GOOGLEAPIKEY)
 
     @app.route('/process', methods=['POST', 'GET'])
     def process_wiki():
