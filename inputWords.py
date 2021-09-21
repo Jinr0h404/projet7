@@ -29,7 +29,7 @@ class Parser():
 
     def special_characters(self):
         """regular expression to remove special characters"""
-        self.question = re.sub(r"[^a-zA-Zéèùû-]", " ", self.question)
+        self.question = re.sub(r"[^a-zA-Zéèùûîïë-]", " ", self.question)
 
     def convert_lower(self):
         """method to convert all string in lower case"""
@@ -100,8 +100,8 @@ class Wiki():
         if len(article) > 0:
             self.wiki_status = "ok"
             self.summary = wikipedia.summary(
-                    article,
-                    sentences=0, chars=0, auto_suggest=True, redirect=True)
+                article,
+                sentences=0, chars=0, auto_suggest=True, redirect=True)
             return self.summary
         else:
             self.wiki_status = "not_ok"
