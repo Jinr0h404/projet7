@@ -51,9 +51,6 @@ class Google_position():
     """Google_position class takes words like args and return the latitude and
     the longitude from google maps api"""
     def __init__(self, input_search):
-        self.latitude = 0
-        self.longitude = 0
-        self.adresse = ''
         self.input_search = input_search
         self.position_keyword = {}
         self.status = ""

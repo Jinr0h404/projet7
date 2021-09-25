@@ -15,6 +15,10 @@ def create_app(config):
 
     @app.route('/process', methods=['POST', 'GET'])
     def process_wiki():
+        """this function processes the AJAX call. It retrieves the user's
+        request, sends it for processing to the backend then depending on the
+        status of the processing of the request, returns a dictionary with all
+        the response elements for the JS"""
         question_input = request.form["question_input"]
         if question_input:
             test_input = inputWords.main(question_input)
