@@ -6,6 +6,12 @@ body {
   background-color: #edeff2;
   font-family: "Calibri", "Roboto", sans-serif;
 }
+header{
+  position: absolute;
+  width: 100%;
+  top: 3%;
+}
+
 .logo{
   display: flex;
   justify-content: center;
@@ -204,7 +210,7 @@ body {
 
 footer{
   position: absolute;
-  bottom: 3%;
+  bottom: 4%;
   width: 100%;
 }
 
@@ -240,4 +246,42 @@ footer{
   width: 60%;
   /* The width is the width of the web page */
   
+}
+
+.little_screen{
+  display: none;
+}
+
+.md_screen{
+    display: contents;
+  }
+
+
+@media all and (max-width: 479px)
+{
+  header{
+    position: absolute;
+    width: 100%;
+    top: 2%;
+  }
+
+  .logo{
+    display: flex;
+    justify-content: center;
+    color: #bcbdc0;
+  }
+
+  footer{
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+  }
+
+  .md_screen{
+    display: none;
+  }
+  .little_screen{
+    display: contents;
+  }
+
 }
