@@ -82,7 +82,7 @@ class Wiki():
     def __init__(self):
         self.title = None
         self.results = 1
-        self.radius = 1000
+        self.radius = 10000
         self.summary = ""
         self.wiki_status = ""
 

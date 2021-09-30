@@ -65,4 +65,4 @@ made with:
 
 ## Contributor & Author
 
-Ewen Jeannenot
+Ewen Jeannenot & snippet from https://www.bootdey.com/
